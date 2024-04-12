@@ -1,0 +1,144 @@
+Geografisk utsökning i SHARKweb 
+
+===== NY =====
+
+Rubrik:		Län
+Skikt:		KOMMUNER_LAN.shp
+Kolumn(er):	LANSNAMN
+Ursprung:	Oklart (Nuvarande skikt behålls)
+Ref-system.	+proj=tmerc +lat_0=0 +lon_0=15.80827777777778 +k=1 +x_0=1500000 +y_0=0 +ellps=bessel +towgs84=414.1,41.3,603.1,-		
+		0.855,2.141,-7.023,0 +units=m +no_defs	
+
+Rubrik:		Kommuner
+Skikt:		KOMMUNER_LAN.shp
+Kolumn(er):	KOMMUNNAMN
+Ursprung:	Oklart (Nuvarande skikt behålls)
+Ref-system.	+proj=tmerc +lat_0=0 +lon_0=15.80827777777778 +k=1 +x_0=1500000 +y_0=0 +ellps=bessel 		
+		+towgs84=414.1,41.3,603.1,-0.855,2.141,-7.023,0 +units=m +no_defs	
+
+Rubrik:		Vattendistrikt enligt Svenskt VattenARkiv (SVAR)
+Skikt:		havsomr_y_2012_2.shp
+Kolumn(er):	VATTENDIST (id:n, översätts till namn i java-kod*)
+Ursprung:	Svenskt VattenARkiv (SVAR)	
+Ref-system.	+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+
+Rubrik:		Vattenförekomst(er)	
+Skikt:		havdirtyper_2012_delatKattegatt.shp
+Kolumner:	NAMN + HID [exv: Alnösundet (622500-172430)]
+Ursprung:	Oklart
+Ref-system:	+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+
+Rubrik:		Områdestyp(er) enligt Svenskt Vattenarkiv (SVAR)
+Skikt:		havsomr_y_2012_2.shp
+Kolumner:	OMRTYP (id, ska översättas **)
+Ursprung:	Svenskt VattenARkiv (SVAR)
+Ref-system:	+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+
+Rubrik:		Typområde(n) enligt Havsdirektivet
+Skikt:		havdirtyper_2012_delatKattegatt.shp
+Kolumner:	TYP_HAVDIR (id:n, översätts till namn i java-kod*)
+Ursprung:	Oklart
+Ref-system:	+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+
+Rubrik:		HELCOM/OSPAR-områden
+Skikt:		KONVENTION.shp
+Kolumner:	KONVENTION
+Ursprung:	Oklart
+Ref		+proj=tmerc +lat_0=0 +lon_0=15.80827777777778 +k=1 +x_0=1500000 +y_0=0 +ellps=bessel 		
+		+towgs84=414.1,41.3,603.1,-0.855,2.141,-7.023,0 +units=m +no_defs
+
+NY:
+Rubrik:		Svensk ekonomisk zon (EEZ)
+Skikt:		MSFD_areas.shp
+Kolumner:	(Alla objekt/polygoner utgör tillsammans EEZ)
+Ursprung:	Från Örjan  ***
+Ref		+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs
+
+NY:
+Rubrik:		Havsbassänger enligt Havsmiljödirektivet (MSFD)
+Skikt:		MSFD_areas.shp
+Kolumner:	Name
+Ursprung:	Från Örjan  ***
+Ref		+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs
+
+
+
+
+* 
+Se https://svn.smhi.se/repos/sharkadm/trunk/src/se/smhi/sharkadm/visitlocation/ShapeFileReader.java
+
+**
+1 = Estuarium
+2 = Havsområde <1 NM från baslinje
+3 = Havsområde 1-12 NM från baslinje
+4 = Utsjö (>12 NM från baslinje)
+
+***
+European Union's Marine Strategy Framework Directive
+Data från Örjan:
+https://svn.smhi.se/repos/shd/trunk/SharkToolbox/data/shapefiles/SVAR%202012_2/havsomraden%20MFSD/
+
+
+
+
+
+
+
+
+
+===== GAMMAL =====
+
+Rubrik:		Län
+Skikt:		KOMMUNER_LAN.shp
+Kolumn(er):	LANSNAMN
+Ursprung:	Oklart	
+Ref-system.	+proj=tmerc +lat_0=0 +lon_0=15.80827777777778 +k=1 +x_0=1500000 +y_0=0 +ellps=bessel 		
+		+towgs84=414.1,41.3,603.1,-		
+		0.855,2.141,-7.023,0 +units=m +no_defs	
+
+Rubrik:		Kommuner
+Skikt:		KOMMUNER_LAN.shp
+Kolumn(er):	KOMMUNNAMN
+Ursprung:	Oklart	
+Ref-system.	+proj=tmerc +lat_0=0 +lon_0=15.80827777777778 +k=1 +x_0=1500000 +y_0=0 +ellps=bessel +towgs84=414.1,41.3,603.1,-		
+		0.855,2.141,-7.023,0 +units=m +no_defs	
+
+Rubrik:		Vattendistrikt
+Skikt:		HAVSOMRADE.shp
+Kolumn(er):	VATTENDIST (id:n, översätts till namn i java-kod*)
+Ursprung:	Oklart	
+Ref-system.	+proj=tmerc +lat_0=0 +lon_0=15.80827777777778 +k=1 +x_0=1500000 +y_0=0 +ellps=bessel +towgs84=414.1,41.3,603.1,-	
+		0.855,2.141,-7.023,0 +units=m +no_defs
+
+Rubrik:		Vattenförekomst(er)	
+Skikt:		havdirtyper_2012_delatKattegatt.shp
+Kolumner:	NAMN + HID [exv: Alnösundet (622500-172430)]
+Ursprung:	Oklart
+Ref-system:	+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+
+Rubrik:		Typområde(n)
+Skikt:		havdirtyper_2012_delatKattegatt.shp
+Kolumner:	TYP_HAVDIR (id:n, översätts till namn i java-kod*)
+Ursprung:	Oklart
+Ref-system:	+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+
+Rubrik:		Vattenkategori(er)
+Skikt:		SW and CW_v2.shp
+Kolumner:	SW_CW ('CW','MO', 'EJ Svenskt MO' - oklar betydelse)
+Ursprung:	Oklart
+Ref-system:	+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+
+Rubrik:		Vattenkategori(er)
+Skikt:		SW and CW_v2.shp
+Kolumner:	SW_CW ('CW','MO', 'EJ Svenskt MO' - oklar betydelse)
+Ursprung:	Oklart
+Ref-system:	+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+
+Rubrik:		HELCOM/OSPAR-områden
+Skikt:		KONVENTION.shp
+Kolumner:	KONVENTION
+Ursprung:	Oklart
+Ref		+proj=tmerc +lat_0=0 +lon_0=15.80827777777778 +k=1 +x_0=1500000 +y_0=0 +ellps=bessel 		
+		+towgs84=414.1,41.3,603.1,-0.855,2.141,-7.023,0 +units=m +no_defs
+
+
