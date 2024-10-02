@@ -7,7 +7,6 @@ library(ggspatial)
 library(sp)
 library(geosphere)
 
-
 shapefilesDir <- "data/raw_data/shapefiles/sharkweb_shapefiles/"
 basin_shapefile <- "Havsomr_SVAR_2016_3b_CP1252.shp"
 basin_names <- "sea_basin_utf8.txt"
@@ -36,7 +35,8 @@ all_syke <- occurrence_syke %>%
   filter(measurementtype == "Abundance of biological entity specified elsewhere per unit volume of the water body")
 
 coords <- all_syke %>%
-  select(eventid, eventdate, decimallatitude, decimallongitude)
+  select(eventid, eventdate, decimallatitude, decimallongitude) %>% 
+  distinct()
 
 syke_diversity <- all_syke %>%
   group_by(eventid) %>%
@@ -89,6 +89,104 @@ abundance <- all %>%
   mutate(sample_sum = sum(as.numeric(measurementValue))) %>%
   ungroup()
 
+
+### Poland Data https://ipt.vliz.be/eurobis/resource?r=pl_zo_monitoring
+
+pl_dwca <- dwca_read("data/raw_data/dwca-pl_zo_monitoring-v1.0.zip")
+
+occurrence_pl <- read_tsv(pl_dwca$files$txt_files[2])
+emof_pl <- read_tsv(pl_dwca$files$txt_files[1])
+
+# occurrence_pl_sel <- occurrence_pl %>%
+#   select(id, occurrenceID, measurementType, measurementValue, measurementUnit)
+
+all_pl <- occurrence_pl %>%
+  left_join(emof_pl) %>%
+  filter(measurementType == "abundance")
+
+
+coords_pl <- all_pl %>%
+  select(eventID, eventDate, decimalLatitude, decimalLongitude) %>%
+  distinct()
+
+pl_diversity <- all_pl %>%
+  group_by(eventID) %>%
+  summarise(uniqueTaxa = length(unique(scientificName)),
+            shannon = diversity(as.numeric(measurementValue))) %>%
+  left_join(coords_pl) %>%
+  rename(id = eventID) %>%
+  mutate(origin = "PL")
+
+
+
+### Estonian Data https://ipt.vliz.be/eurobis/resource?r=zooplankton_data_estonian_territorial_waters_1993-2016
+
+est_dwca <- dwca_read("data/raw_data/dwca-zooplankton_data_estonian_territorial_waters_1993-2016-v1.0.zip")
+
+event_est <- read_tsv(est_dwca$files$txt_files[1])
+occurrence_est <- read_tsv(est_dwca$files$txt_files[3]) %>%
+  select(-decimalLatitude, -decimalLongitude, -eventDate)
+emof_est <- read_tsv(est_dwca$files$txt_files[2])
+
+# occurrence_pl_sel <- occurrence_pl %>%
+#   select(id, occurrenceID, measurementType, measurementValue, measurementUnit)
+
+event_est_sel <- event_est %>%
+  select(id, eventID, eventDate, decimalLatitude, decimalLongitude)
+
+
+all_est <- occurrence_est %>%
+  left_join(emof_est) %>%
+  left_join(event_est_sel) %>%
+  filter(measurementType == "arvukus")
+
+
+coords_est <- all_est %>%
+  select(eventID, eventDate, decimalLatitude, decimalLongitude) %>%
+  distinct()
+
+est_diversity <- all_est %>%
+  group_by(eventID) %>%
+  mutate(measurementValue = as.numeric(measurementValue)) %>%
+  filter(!is.na(measurementValue)) %>%
+  summarise(uniqueTaxa = length(unique(scientificName)),
+            shannon = diversity(as.numeric(measurementValue))) %>%
+  left_join(coords_est) %>%
+  rename(id = eventID) %>%
+  mutate(origin = "EST")
+
+
+
+### Danish data https://ipt.vliz.be/eurobis/resource?r=odam_zooplankton_1985
+
+dk_dwca <- dwca_read("data/raw_data/dwca-odam_zooplankton_1985-v1.0.zip")
+
+occurrence_dk <- read_tsv(dk_dwca$files$txt_files[2])
+emof_dk <- read_tsv(dk_dwca$files$txt_files[1])
+
+# occurrence_pl_sel <- occurrence_pl %>%
+#   select(id, occurrenceID, measurementType, measurementValue, measurementUnit)
+
+all_dk <- occurrence_dk %>%
+  left_join(emof_dk) %>%
+  filter(measurementType == "WaterAbund_BE007117....l.")
+
+
+coords_dk <- all_dk %>%
+  select(eventID, eventDate, decimalLatitude, decimalLongitude) %>%
+  distinct()
+
+dk_diversity <- all_dk %>%
+  group_by(eventID) %>%
+  summarise(uniqueTaxa = length(unique(scientificName)),
+            shannon = diversity(as.numeric(measurementValue))) %>%
+  left_join(coords_dk) %>%
+  rename(id = eventID) %>%
+  mutate(origin = "DK")
+
+
+
+
 # Create basemap
 baltic_sea_map <- basemap(
   limits = c(min(abundance$decimalLongitude) - 1, max(abundance$decimalLongitude) + 1, min(abundance$decimalLatitude) - 1, max(abundance$decimalLatitude) + 1),
@@ -123,7 +221,12 @@ save(data_diversity, file= "data/derived_data/data_diversity.rda")
 diversity_all <- data_diversity %>%
   select(id, eventDate, uniqueTaxa, shannon, decimalLatitude, decimalLongitude) %>%
   mutate(origin = "SMHI") %>%
-  rbind(syke_diversity)
+  rbind(syke_diversity) %>%
+  rbind(pl_diversity) %>%
+  rbind(est_diversity) %>%
+  rbind(dk_diversity)
+
+save(diversity_all, file= "data/derived_data/data_diversity_all.rda")
 
 # Calculate mean
 mean_diversity <- data_diversity %>%
