@@ -197,6 +197,8 @@ fi = julia_eval("fi")
 # Clip the interpolated values to be non-negative
 fi <- pmax(fi, 0)
 
+save(xx, yy, tt, xi, yi, ti, fi, file = "data/derived_data/diva3d.rda")
+
 # Select a specific time slice (e.g., the first time step)
 time_index <- 66  # Or select any other index to visualize different time steps
 fi_slice <- fi[,, time_index]  # Extract the 2D slice of the interpolated values for the chosen time step
