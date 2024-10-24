@@ -19,6 +19,18 @@ docs/*.pdf
 # output files
 output/
 
+# Data files
+data/*/*
+
+# Products
+product/*/*.png
+product/*/*.nc
+product/*/*.WebM
+product/*/*.gif
+
+# Keep gitkeep
+!.gitkeep
+
 # knitr and R markdown default cache directories
 /analysis/cache/
 /analysis/figures/
@@ -29,3 +41,6 @@ output/
 
 # RStudio
 .Rproj.user
+
+# Temporary files
+.DS_Store
