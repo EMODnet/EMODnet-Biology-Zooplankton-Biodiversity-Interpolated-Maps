@@ -209,14 +209,14 @@ baltic_sea_map <- basemap(
 #   scale_size_continuous(range = c(1, 10), name = "Abundance (ind/m3)")
 
 
-# Calculate alpha diversity
-data_diversity <- abundance %>%  
-  group_by(id) %>%
-  summarise(uniqueTaxa = length(unique(scientificName)),
-            shannon = diversity(as.numeric(measurementValue))) %>%
-  left_join(event)
-
-save(data_diversity, file= "data/derived_data/data_diversity.rda")
+# # Calculate alpha diversity
+# data_diversity <- abundance %>%  
+#   group_by(id) %>%
+#   summarise(uniqueTaxa = length(unique(scientificName)),
+#             shannon = diversity(as.numeric(measurementValue))) %>%
+#   left_join(event)
+# 
+# save(data_diversity, file= "data/derived_data/data_diversity.rda")
 
 diversity_all <- data_diversity %>%
   select(id, eventDate, uniqueTaxa, shannon, decimalLatitude, decimalLongitude) %>%
@@ -348,7 +348,7 @@ time_series <- ggplot(diversity_all, aes(x = eventDate, y = shannon)) +
 # Save map
 ggsave(
   plot = time_series,
-  path = "output/",
+  path = "product/plots/",
   filename = "times_series_all.png",
   device = "png",
   dpi = 300,
@@ -359,10 +359,39 @@ ggsave(
 # Save map
 ggsave(
   plot = map,
-  path = "output/",
+  path = "product/maps/",
   filename = "map_all.png",
   device = "png",
   dpi = 300,
   width = 7,
   height = 7
 )
+
+
+# Create basemap
+baltic_sea_map <- basemap(
+  limits = c(min(subset_all$decimalLongitude) - 1, max(subset_all$decimalLongitude) + 1, min(subset_all$decimalLatitude) - 1, max(subset_all$decimalLatitude) + 1),
+  land.col = "#eeeac4",
+  land.border.col = "black",
+  rotate = TRUE,
+  bathymetry = FALSE
+)
+
+# Plot points on map
+map <- baltic_sea_map +
+  geom_spatial_point(
+    data = subset_all,
+    aes(x = decimalLongitude, y = decimalLatitude, size = shannon),
+    pch = 21,
+    # size = 2,
+    fill = "red",
+    colour = "black"
+  ) +
+  scale_size_continuous(range = c(1, 10), name = "Shannon index") +
+  ggtitle("Average Zooplankton shannon 2010")
+
+# Save plot
+ggsave("product/maps/sample_map.png",
+       map,
+       device = "png",
+       bg = "white")

@@ -1,37 +1,13 @@
 library(RNetCDF)
-library(JuliaCall)
 
+# Define path to NetCDF output
+net_cdf_file <- file.path("product", "netcdf" , "alpha_diversity.nc")
+
+# Load DIVAnd data
 load("data/derived_data/diva3d.rda")
 
-# Function to convert decimal year to days since 1970 and round
-decimal_year_to_days <- function(decimal_year) {
-  year <- floor(decimal_year)
-  fraction <- decimal_year - year
-  
-  # Calculate the date corresponding to the decimal year
-  date <- as.Date(paste0(year, "-01-01")) + round(fraction * 365)  # Rounding to nearest day
-  
-  # Calculate days since January 1, 1970
-  days_since_epoch <- as.numeric(difftime(date, as.Date("1970-01-01"), units = "days"))
-  
-  return(days_since_epoch)
-}
-
-# Apply the function to the tt vector
-tt <- sapply(tt, decimal_year_to_days)
-
-julia_assign("xx", xx)
-julia_assign("yy", yy)
-julia_assign("tt", tt)
-
-julia_command("xi, yi, ti = ndgrid(xx, yy, tt)")
-
-xi = julia_eval("xi")
-yi = julia_eval("yi")
-ti <- julia_eval("ti")
-
 # Create nc file
-nc <- create.nc(file.path("product","alpha_diversity.nc")) 
+nc <- create.nc(net_cdf_file) 
 
 ## Define dimensions of the NetCDF
 
@@ -76,7 +52,7 @@ var.get.nc(nc, variable = "lat")
 ### Time
 
 # Define time dimension
-dim.def.nc(nc, dimname = "time", dimlength = length(tt)) 
+dim.def.nc(nc, dimname = "time", dimlength = length(tt_days)) 
 
 # Define time variable
 var.def.nc(nc, varname = "time", vartype = "NC_DOUBLE", dimensions = "time")
@@ -88,7 +64,7 @@ att.put.nc(nc, variable = "time", name = "units", type = "NC_CHAR", value = "day
 att.put.nc(nc, variable = "time", name = "calendar", type = "NC_CHAR", value = "gregorian")
 
 # Put data
-var.put.nc(nc, variable = "time", data = tt)
+var.put.nc(nc, variable = "time", data = tt_days)
 
 # Check
 paste("timepoints")
@@ -123,10 +99,9 @@ att.put.nc(nc, variable = "shannon", name = "long_name", type = "NC_CHAR", value
 var.put.nc(nc, variable = "shannon", data = fi) 
 
 ## Global attributes and save nc file
-
 attributes <- list(
   title = "Zooplankton alpha diversity in the greater Baltic Sea area",
-  summary = "This dataset compiles monthly Shannon diversity index (H') and species richness (n taxa) of phytoplankton data in the greater Baltic Sea area between years 2000-2021, calculated from abundance data originating from the Swedish National phytoplankton monitoring programme. Samples have been rarified before calculating alpha diversity measures, and nearby spatial data points (stations) have been clustered together",                       
+  summary = "",                       
   Conventions = "CF-1.8",
   naming_authority = "emodnet-biology.eu",
   history = "https://www.vliz.be/imis?dasid=XXXX",
@@ -180,5 +155,4 @@ add_global_attributes(nc, attributes)
 # Close nc file
 close.nc(nc)
 
-paste0("NetCDF data containing shannon index and species richness (n taxa) has been stored in ", derivedDir ,"/alpha_diversity.nc")
-
+cat("NetCDF data containing shannon index has been stored in", net_cdf_file, "\n")
