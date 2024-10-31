@@ -1,5 +1,4 @@
 library(JuliaCall)
-library(logger)
 library(tidyverse)
 library(rnaturalearth)
 library(sf)
@@ -15,10 +14,6 @@ load("data/derived_data/data_diversity_all.rda")
 
 # Get land polygons from Natural Earth
 land_polygons <- ne_countries(scale = "medium", returnclass = "sf")
-
-# Subset samples from year 2000 and forward
-subset_all <- diversity_all %>%
-  filter(year(eventDate) >= 2000)
 
 # Function to classify seasons
 get_season <- function(date) {
@@ -36,7 +31,7 @@ get_season <- function(date) {
 }
 
 # Apply the function to the dataset
-subset_all <- subset_all %>%
+diversity_all <- diversity_all %>%
   mutate(season = sapply(eventDate, get_season))
 
 # Function to convert season to a numeric value with consideration for Winter overlap
@@ -59,17 +54,17 @@ get_season_numeric <- function(date) {
 }
 
 # Create a combined numeric time variable with proper handling of Winter
-subset_all <- subset_all %>%
+diversity_all <- diversity_all %>%
   mutate(year = as.numeric(format(eventDate, "%Y")),        # Extract and convert year to numeric
          season_num = sapply(eventDate, get_season_numeric), # Convert season to numeric, handle Winter overlap
          time_numeric = ifelse(season_num == 0, (year - 1) + 0.75, 
                                year + (season_num - 1) / 4)) # Correct year for January-February Winter
 
 # Assign the dimensions
-x <- subset_all$decimalLongitude
-y <- subset_all$decimalLatitude
-t <- subset_all$time_numeric
-f <- subset_all$shannon
+x <- diversity_all$decimalLongitude
+y <- diversity_all$decimalLatitude
+t <- diversity_all$time_numeric
+f <- diversity_all$shannon
 
 # Set the interpolation grid
 NX <- 100
@@ -78,7 +73,7 @@ NT <- length(unique(t))
 
 xx <- seq(9.5, 30, length.out=NX)
 yy <- seq(53.5, 66, length.out=NY)
-tt <- sort(unique(subset_all$time_numeric))
+tt <- sort(unique(diversity_all$time_numeric))
 
 # Function to convert decimal year to days since 1970 and round
 decimal_year_to_days <- function(decimal_year) {
