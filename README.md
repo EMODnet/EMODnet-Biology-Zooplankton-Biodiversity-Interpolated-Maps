@@ -41,6 +41,8 @@ EMODnet-Biology-Zooplankton-Biodiversity-Interpolated-Maps/
 
 {{data_product_description}}
 
+https://github.com/user-attachments/assets/12fe03c5-e523-4744-85dd-44f6a3ff31e4
+
 ## More information:
 
 ### References
