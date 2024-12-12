@@ -48,6 +48,8 @@ This data product provides a spatial-temporal interpolation of zooplankton alpha
 
 The output includes interpolated diversity values, an associated error map, and metadata on the spatial-temporal grid resolution. It is tailored for ecological and oceanographic studies, aiding in the visualization and analysis of diversity trends over time and space.
 
+[Zooplankton_Diversity_Animation](https://github.com/user-attachments/assets/4ad56d24-6bb2-4328-a3cf-65f6922e88c7)
+
 ---
 
 ### Data Input
@@ -132,8 +134,6 @@ These outputs provide a detailed, spatially-explicit representation of zooplankt
 ---
 
 This product combines advanced spatial interpolation techniques with ecological modeling, enabling a deeper understanding of biodiversity dynamics in the Baltic Sea region.
-
-https://github.com/user-attachments/assets/12fe03c5-e523-4744-85dd-44f6a3ff31e4
 
 ## More information:
 
