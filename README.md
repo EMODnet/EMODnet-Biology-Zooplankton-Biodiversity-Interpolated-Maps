@@ -48,7 +48,7 @@ This data product provides a spatial-temporal interpolation of zooplankton alpha
 
 The output includes interpolated diversity values, an associated error map, and metadata on the spatial-temporal grid resolution. It is tailored for ecological and oceanographic studies, aiding in the visualization and analysis of diversity trends over time and space.
 
-[Zooplankton_Diversity_Animation](https://github.com/user-attachments/assets/4ad56d24-6bb2-4328-a3cf-65f6922e88c7)
+[Zooplankton_Diversity_Animation](https://github.com/user-attachments/assets/21771dbf-541d-40ed-abff-373c89188d11)
 
 ### Data Input
 
@@ -62,15 +62,8 @@ The output includes interpolated diversity values, an associated error map, and 
 - The rarefaction algorithm iteratively subsamples without replacement, calculating diversity metrics for the standardized dataset.
 
 #### 3. Diversity Calculation
-- **Shannon Diversity Index**: The Shannon diversity index (`H`) is calculated as:
-
-  \[
-  H = -\sum_{i=1}^S p_i \ln(p_i)
-  \]
-  
-  where \(S\) is the total number of species and \(p_i\) is the proportional abundance of species \(i\).
+- **Shannon Diversity Index**: The Shannon diversity index (`H`) is calculated using the `vegan` R package.
 - **Input Data**: The index is derived from the rarefied species abundance data, ensuring that all samples have equal weight regardless of original size.
-- **Interpretation**: Higher values indicate greater species richness and evenness, reflecting a more diverse zooplankton community.
 
 #### 4. Land Mask
 - Natural Earth polygons used to mask grid points that fall on land.
