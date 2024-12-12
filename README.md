@@ -55,7 +55,7 @@ The output includes interpolated diversity values, an associated error map, and 
 ### Data Input
 
 #### 1. Observation Data
-- **Observation Data**: The zooplankton data are derived from Swedish and Finish national monitoring programs. Data sources include environmental surveys and sampling programs that collect zooplankton samples using standard plankton nets and methodologies.
+- **Observation Data**: The zooplankton data are derived from Swedish and Finnish national monitoring programs. Data sources include environmental surveys and sampling programs that collect zooplankton samples using standard plankton nets and methodologies.
 - **Ecological Metrics**: Shannon diversity index values are calculated from these samples after species abundance data are aggregated at each sampling station.
 - **Time Range**: Observations are included starting from 2007, when data collection became more regular, ensuring sufficient coverage for accurate spatial-temporal interpolation.
 
