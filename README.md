@@ -119,6 +119,7 @@ These outputs provide a detailed, spatially-explicit representation of zooplankt
 ### References
 
 - Beckers, J., A. Barth, C. Troupin, and A. Alvera-Azcárate, 2014: Approximate and Efficient Methods to Assess Error Fields in Spatial Gridding with Data Interpolating Variational Analysis (DIVA). J. Atmos. Oceanic Technol., 31, 515–530, https://doi.org/10.1175/JTECH-D-13-00130.1.
+- Hu YO, Karlson B, Charvet S, Andersson AF. Diversity of Pico- to Mesoplankton along the 2000 km Salinity Gradient of the Baltic Sea. Front Microbiol. 2016 May 12;7:679. doi: https://doi.org/10.3389/fmicb.2016.00679.
 
 ### Code and methodology
 
