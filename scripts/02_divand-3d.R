@@ -197,7 +197,7 @@ e <- julia_eval("e")
 fi <- pmax(fi, 0)
 
 # Replace values in fi with NA where error is large
-fi[e > 22.5] <- NA
+fi[e > 20.5] <- NA
 
 # Save the DIVAnd output
 save(xx, yy, tt, xi, yi, ti, fi, e, tt_days, NT, file = "data/derived_data/diva3d.rda")

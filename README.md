@@ -44,13 +44,11 @@ https://obis.org/dataset/f1ad2d12-8f7e-4b56-848c-ffa9c6103eb1
 
 ## Data product
 
-This data product provides a spatial-temporal interpolation of zooplankton alpha diversity in the greater Baltic Sea area. Using observed Shannon diversity indices from environmental data, the product employs the DIVAnd (Data-Interpolating Variational Analysis in n-Dimensions) to create a three-dimensional interpolation across longitude, latitude, and seasonal time dimensions.
+This data product provides a spatial-temporal interpolation of zooplankton alpha diversity in the greater Baltic Sea area (including Skagerrak and Kattegat). Using observed Shannon diversity indices from environmental monitoring data, the product employs the DIVAnd (Data-Interpolating Variational Analysis in n-Dimensions) to create a three-dimensional interpolation across longitude, latitude, and seasonal time dimensions.
 
 The output includes interpolated diversity values, an associated error map, and metadata on the spatial-temporal grid resolution. It is tailored for ecological and oceanographic studies, aiding in the visualization and analysis of diversity trends over time and space.
 
 [Zooplankton_Diversity_Animation](https://github.com/user-attachments/assets/4ad56d24-6bb2-4328-a3cf-65f6922e88c7)
-
----
 
 ### Data Input
 
@@ -60,14 +58,16 @@ The output includes interpolated diversity values, an associated error map, and 
 - **Time Range**: Observations are included starting from 2007, when data collection became more regular, ensuring sufficient coverage for accurate spatial-temporal interpolation.
 
 #### 2. Normalization Using Rarefaction
-- To standardize data across varying sample sizes, rarefaction is applied to species abundance data. This ensures comparability of diversity metrics by subsampling to a uniform number of individuals (e.g., 100 individuals per sample). Rarefaction minimizes biases due to differences in sampling effort or organism density.
+- To standardize data across varying sample sizes, rarefaction is applied to species abundance data. This ensures comparability of diversity metrics by subsampling to a uniform number of individuals (e.g., 1000 individuals per sample). Rarefaction minimizes biases due to differences in sampling effort or organism density.
 - The rarefaction algorithm iteratively subsamples without replacement, calculating diversity metrics for the standardized dataset.
 
 #### 3. Diversity Calculation
 - **Shannon Diversity Index**: The Shannon diversity index (`H`) is calculated as:
+
   \[
   H = -\sum_{i=1}^S p_i \ln(p_i)
   \]
+  
   where \(S\) is the total number of species and \(p_i\) is the proportional abundance of species \(i\).
 - **Input Data**: The index is derived from the rarefied species abundance data, ensuring that all samples have equal weight regardless of original size.
 - **Interpretation**: Higher values indicate greater species richness and evenness, reflecting a more diverse zooplankton community.
@@ -80,8 +80,6 @@ The output includes interpolated diversity values, an associated error map, and 
 - **Longitude**: 9.5°E to 30°E (`xx` grid, 100 steps).
 - **Latitude**: 53.5°N to 66°N (`yy` grid, 110 steps).
 - **Temporal Dimension**: Numeric seasons calculated as unique time steps (`tt` grid).
-
----
 
 ### Data Processing Workflow
 
@@ -98,13 +96,11 @@ The output includes interpolated diversity values, an associated error map, and 
 - Observational error variance was normalized by background error variance by epsilon = 1.0.
 
 #### 4. Error Map
-- An error map was computed using the `DIVAnd_errormap` function, employing a "cheap" approximation for computational efficiency (Beckers et al. 2014).
+- An error map is computed using the `DIVAnd_errormap` function, employing a "cheap" approximation for computational efficiency (Beckers et al. 2014).
 
 #### 5. Post-Processing
-- Interpolated values were clipped to non-negative values.
-- High-error regions were set to `NA` using a relative threshold error value.
-
----
+- Interpolated values are clipped to non-negative values.
+- High-error regions are set to `NA` using a relative threshold error value.
 
 ### Data Outputs
 
@@ -125,16 +121,6 @@ The output from the spatial-temporal interpolation of zooplankton alpha diversit
 
 These outputs provide a detailed, spatially-explicit representation of zooplankton diversity over time, suitable for further analysis or visualization.
 
----
-
-### Limitations
-- Spatial and temporal gaps in observations may introduce interpolation uncertainty.
-- Error thresholds and masking criteria may require adjustment for specific applications.
-
----
-
-This product combines advanced spatial interpolation techniques with ecological modeling, enabling a deeper understanding of biodiversity dynamics in the Baltic Sea region.
-
 ## More information:
 
 ### References
@@ -143,13 +129,15 @@ This product combines advanced spatial interpolation techniques with ecological 
 
 ### Code and methodology
 
-{{link_code}}
+The code, written in R, is distributed through GitHub:
+
+[Link to repository](https://github.com/EMODnet/EMODnet-Biology-Zooplankton-Biodiversity-Interpolated-Maps)
 
 ### Citation and download link
 
 This product should be cited as:
 
-{{product_citation}}
+Torstensson A (2024) Spatio-Temporal Interpolation of Zooplankton Alpha Diversity in the Greater Baltic Sea Region. Integrated data products created under the European Marine Observation Data Network (EMODnet) Biology project Phase V (CINEA/EMFAF/2022/3.5.2/SI2.895681), funded by the by the European Union under Regulation (EU) No 2021/1139 of the European Parliament and of the Council of 7 July 2021 on the European Maritime and Fisheries Fund.
 
 Available to download in:
 

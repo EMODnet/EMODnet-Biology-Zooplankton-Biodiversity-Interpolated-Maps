@@ -1,7 +1,7 @@
 library(RNetCDF)
 
 # Define path to NetCDF output
-net_cdf_file <- file.path("product", "netcdf" , "alpha_diversity.nc")
+net_cdf_file <- file.path("product", "netcdf" , "zooplankton_diversity.nc")
 
 # Load DIVAnd data
 load("data/derived_data/diva3d.rda")
@@ -100,7 +100,7 @@ var.put.nc(nc, variable = "shannon", data = fi)
 
 ## Global attributes and save nc file
 attributes <- list(
-  title = "Zooplankton alpha diversity in the greater Baltic Sea area",
+  title = "Spatio-Temporal Interpolation of Zooplankton Alpha Diversity in the Greater Baltic Sea Region",
   summary = "",                       
   Conventions = "CF-1.8",
   naming_authority = "emodnet-biology.eu",
@@ -128,8 +128,8 @@ attributes <- list(
   comment = "Uses attributes recommended by http://cfconventions.org",
   license = "CC-BY", 
   publisher_name = "EMODnet Biology Data Management Team",
-  citation = "Torstensson A (2024) Phytoplankton alpha diversity in the greater Baltic Sea area. Integrated data products created under the European Marine Observation  Data Network (EMODnet) Biology project Phase IV (EMFF/2019/1.3.1.9/Lot  6/SI2.837974), funded by the by the European Union under Regulation (EU) No 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and Fisheries Fund",
-  acknowledgement = "European Marine Observation Data Network (EMODnet) Biology project (EMFF/2019/1.3.1.9/Lot 6/SI2.837974), funded by the European Union under Regulation (EU) No 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and Fisheries Fund"
+  citation = "Torstensson A (2024) Spatio-Temporal Interpolation of Zooplankton Alpha Diversity in the Greater Baltic Sea Region. Integrated data products created under the European Marine Observation Data Network (EMODnet) Biology project Phase V (CINEA/EMFAF/2022/3.5.2/SI2.895681), funded by the by the European Union under Regulation (EU) No 2021/1139 of the European Parliament and of the Council of 7 July 2021 on the European Maritime and Fisheries Fund.",
+  acknowledgement = "European Marine Observation Data Network (EMODnet) Biology project (CINEA/EMFAF/2022/3.5.2/SI2.895681), funded by the European Union under Regulation (EU) No 2021/1139 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and Fisheries Fund"
 )
 
 # Define function that detects if the data type should be character of 
