@@ -11,10 +11,6 @@ load("data/derived_data/diva3d.rda")
 # Get land polygons from Natural Earth
 land_polygons <- ne_countries(scale = "medium", returnclass = "sf")
 
-# Select a specific time slice (e.g., the first time step)
-time_index <- 1  # Or select any other index to visualize different time steps
-fi_slice <- fi[,, time_index]  # Extract the 2D slice of the interpolated values for the chosen time step
-
 # Create a mapping of time_step to year and season based on tt
 time_labels <- data.frame(
   time_step = 1:NT,
@@ -28,44 +24,6 @@ time_labels <- data.frame(
 # Create a combined year and season numeric column (time_numeric)
 time_labels$time_numeric <- tt
 time_labels$year_season <- paste(time_labels$year, time_labels$season)
-
-# Extract title
-title <- time_labels$year_season[time_index]
-
-# Convert the slice to a data frame for plotting
-interp_grid <- expand.grid(lon = xx, lat = yy)
-interp_grid$fi <- as.vector(fi_slice)
-
-# Define color palette and limits
-pal <- oce.colorsTemperature(100)  # Generate the color palette with 100 color breaks
-zlim <- range(fi, na.rm = TRUE)
-
-# Plot the interpolated map for a specific time slice
-interpolated_map <- ggplot() +
-  
-  # Add the interpolated field as a raster layer
-  geom_raster(data = interp_grid, aes(x = lon, y = lat, fill = fi)) +
-  
-  # Add land polygons from rnaturalearth
-  geom_sf(data = land_polygons, fill = "#eeeac4", color = "black") +
-  
-  # Set color scale for interpolation
-  scale_fill_gradientn(colors = pal, limits = zlim, na.value = "transparent", name = "Shannon index") +
-  
-  # Adjust the plot limits based on your longitude and latitude ranges
-  coord_sf(xlim = range(xx), ylim = range(yy), expand = FALSE) +
-  
-  # Add labels and titles
-  labs(title = paste0("Zooplankton diversity: ", title),
-       x = "Longitude", y = "Latitude") +
-  
-  # Use a minimal theme
-  theme_minimal() 
-
-ggsave("product/maps/interpolated_map.png",
-       interpolated_map,
-       device = "png",
-       bg = "white")
 
 # Load land polygons from Natural Earth
 land_polygons <- ne_countries(scale = "medium", returnclass = "sf")
@@ -120,4 +78,4 @@ animation <- animate(
 )
 
 # Save the animation as a WebM video
-anim_save("product/animations/zooplankton_diversity_animation_2007.webm", animation)
+anim_save("product/animations/zooplankton_diversity_animation.webm", animation)
