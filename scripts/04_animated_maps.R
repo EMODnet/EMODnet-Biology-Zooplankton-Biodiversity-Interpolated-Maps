@@ -12,7 +12,7 @@ load("data/derived_data/diva3d.rda")
 land_polygons <- ne_countries(scale = "medium", returnclass = "sf")
 
 # Select a specific time slice (e.g., the first time step)
-time_index <- 66  # Or select any other index to visualize different time steps
+time_index <- 1  # Or select any other index to visualize different time steps
 fi_slice <- fi[,, time_index]  # Extract the 2D slice of the interpolated values for the chosen time step
 
 # Create a mapping of time_step to year and season based on tt
@@ -120,4 +120,4 @@ animation <- animate(
 )
 
 # Save the animation as a WebM video
-anim_save("product/animations/zooplankton_diversity_animation.webm", animation)
+anim_save("product/animations/zooplankton_diversity_animation_2007.webm", animation)

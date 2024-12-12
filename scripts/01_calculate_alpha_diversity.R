@@ -46,7 +46,7 @@ library(worrms)     # For taxonomic information retrieval from the World Registe
 #   filter(measurementType == "Abundance of biological entity specified elsewhere per unit volume of the water body") %>%  # Select only abundance measurements ("arvukus" means abundance)
 #   # filter(minimumDepthInMeters == 0) %>%  # Select samples taken at the surface (0 meters)
 #   filter(!phylum.y == "Ciliophora") %>%
-#   filter(year(eventDate) >= 2000)  # Include only data from the year 2000 onwards
+#   filter(year(eventDate) >= 2007)  # Include only data from the year 2007 onwards
 # 
 # # Create a species abundance matrix for the selected samples
 # fin_species_matrix <- all_fin %>%
@@ -70,7 +70,7 @@ all_fin <- occurrence_fin %>%
   filter(measurementtype == "Abundance of biological entity specified elsewhere per unit volume of the water body") %>%  # Select records with abundance measurements
   filter(!phylum == "Ciliophora") %>%                                       # Exclude ciliates (Phylum Ciliophora)
   filter(minimumdepthinmeters == 0) %>%                                     # Select samples taken at the surface (0 meters)
-  filter(year(eventdate) >= 2000 & year(eventdate) <= 2022)                 # Include only data between year 2000 to 2022
+  filter(year(eventdate) >= 2007 & year(eventdate) <= 2022)                 # Include only data between year 2007 to 2022
 
 # Create a species abundance matrix
 fin_species_matrix <- all_fin %>%
@@ -114,7 +114,7 @@ abundance_swe <- all_swe %>%
   filter(measurementType == "Abundance") %>%                         # Filter for records of type "Abundance"
   filter(!phylum %in% c("Ciliophora", "Myzozoa", "Radiozoa", "Foraminifera")) %>%  # Exclude specified microplankton phyla
   filter(minimumDepthInMeters == 0) %>%                              # Select samples taken at the surface (0 meters)
-  filter(year(eventDate) >= 2000 & year(eventDate) <= 2022)          # Include only data between year 2000 to 2022
+  filter(year(eventDate) >= 2007 & year(eventDate) <= 2022)          # Include only data between year 2007 to 2022
 
 # Create a species abundance matrix for the selected samples
 swe_species_matrix <- abundance_swe %>%
@@ -165,7 +165,7 @@ all_pl <- occurrence_pl %>%
   left_join(tax_table_pl, by = "scientificNameID") %>%  # Join with taxonomic table to add taxonomic details
   filter(measurementType == "abundance") %>%  # Select only abundance measurements
   filter(minimumDepthInMeters == 0) %>%  # Select samples taken at the surface (0 meters)
-  filter(year(eventDate) >= 2000)  # Include only data from the year 2000 onwards
+  filter(year(eventDate) >= 2007)  # Include only data from the year 2007 onwards
 
 # Create a species abundance matrix for the selected samples
 pl_species_matrix <- all_pl %>%
@@ -224,7 +224,7 @@ all_est <- occurrence_est %>%
   filter(minimumDepthInMeters == 0) %>%  # Select samples taken at the surface (0 meters)
   mutate(measurementValue = as.numeric(measurementValue)) %>%  # Convert measurement values to numeric
   filter(!is.na(measurementValue)) %>%  # Filter out any NA values in measurement values
-  filter(year(eventDate) >= 2000)  # Include only data from the year 2000 onwards
+  filter(year(eventDate) >= 2007)  # Include only data from the year 2007 onwards
 
 # Create a species abundance matrix for the selected samples
 est_species_matrix <- all_est %>%
@@ -273,7 +273,7 @@ all_dk <- occurrence_dk %>%
   left_join(emof_dk) %>%  # Join EMOF data to occurrence data by matching columns
   left_join(tax_table_dk, by = "scientificNameID") %>%  # Join with taxonomic table to add taxonomic details
   filter(measurementType == "WaterAbund_BE007117....l.") %>%  # Select only abundance measurements (specific measurement type)
-  filter(year(eventDate) >= 2000) %>%  # Include only data from the year 2000 onwards
+  filter(year(eventDate) >= 2007) %>%  # Include only data from the year 2007 onwards
   mutate(measurementValue = measurementValue * 1000)  # Convert abundance from "#/l" to "#/m3" (multiply by 1000)
 
 # Create a species abundance matrix for the selected samples
@@ -293,9 +293,9 @@ dk_species_matrix <- all_dk %>%
 # Combine all species matrices into one
 species_matrix <- fin_species_matrix %>%
   full_join(swe_species_matrix) %>%  # Join Swedish species matrix
-  # full_join(pl_species_matrix) %>%    # Join Polish species matrix, skip - full time series (2000-2022) is not covered
-  # full_join(est_species_matrix) %>%   # Join Estonian species matrix, skip - full time series (2000-2022) is not covered
-  # full_join(dk_species_matrix) %>%    # Join Danish species matrix, skip - full time series (2000-2022) is not covered
+  # full_join(pl_species_matrix) %>%    # Join Polish species matrix, skip - full time series (2007-2022) is not covered
+  # full_join(est_species_matrix) %>%   # Join Estonian species matrix, skip - full time series (2007-2022) is not covered
+  # full_join(dk_species_matrix) %>%    # Join Danish species matrix, skip - full time series (2007-2022) is not covered
   mutate(across(everything(), ~replace_na(., 0)))  # Replace NA values with 0 for counts
 
 # Gather the combined data into long format

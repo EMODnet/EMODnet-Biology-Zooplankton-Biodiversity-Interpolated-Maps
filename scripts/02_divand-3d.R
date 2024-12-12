@@ -173,11 +173,31 @@ julia_assign("epsilon2", epsilon2)
 # Run the DIVAnd interpolation in 3D (longitude, latitude, time)
 julia_command("fi, s = DIVAndrun(mask, (pm, pn, pt), (xi, yi, ti), (x, y, t), f, (len, len, len_time), epsilon2);")
 
+# Now, call DIVAnd_errormap to get the error map
+julia_command("
+  e, errormap = DIVAnd_errormap(
+    mask, 
+    (pm, pn, pt), 
+    (xi, yi, ti), 
+    (x, y, t), 
+    f, 
+    (len, len, len_time), 
+    epsilon2,
+    s;
+    method = :cheap,
+    Bscale = false
+  );
+")
+
 # From Julia variable to R variable
-fi = julia_eval("fi")
+fi <- julia_eval("fi")
+e <- julia_eval("e")
 
 # Clip the interpolated values to be non-negative
 fi <- pmax(fi, 0)
 
+# Replace values in fi with NA where error is large
+fi[e > 22.5] <- NA
+
 # Save the DIVAnd output
-save(xx, yy, tt, xi, yi, ti, fi, tt_days, NT, file = "data/derived_data/diva3d.rda")
+save(xx, yy, tt, xi, yi, ti, fi, e, tt_days, NT, file = "data/derived_data/diva3d.rda")
