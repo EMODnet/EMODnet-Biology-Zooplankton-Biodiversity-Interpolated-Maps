@@ -135,7 +135,11 @@ Torstensson A (2024) Spatio-Temporal Interpolation of Zooplankton Alpha Diversit
 
 Available to download in:
 
-{{link_download}}
+Data: https://erddap.emodnet.eu/erddap/files/biology_8771_67af_ab92_76cb/zooplankton_diversity.nc
+
+Metadata record: https://emodnet.ec.europa.eu/geonetwork/srv/eng/catalog.search#/metadata/6d617269-6e65-696e-666f-000000008771
+
+EMODnet Viewer: https://emodnet.ec.europa.eu/geoviewer/?layers=6d617269-6e65-696e-666f-000000008771:1:1&basemap=ebwbl&active=14160&bounds=-7473683.368577629,3082466.814999999,10427724.524577629,11459766.29&filters=&projection=EPSG:3857
 
 ### Authors
 
